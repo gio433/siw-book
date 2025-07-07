@@ -3,6 +3,10 @@ body {
     font-family: sans-serif;
     margin: 0;
     padding: 20px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
 }
 
 .gallery-container {
@@ -10,10 +14,8 @@ body {
     margin: 0 auto;
     padding: 20px;
     border-radius: 8px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     gap: 20px;
 }
 
@@ -23,6 +25,10 @@ body {
     background-color: white;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
 }
 
 .image-card img {
