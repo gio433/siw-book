@@ -1,0 +1,75 @@
+body {
+	width: 100vw;
+	height: 100vh;
+	background-color: rgb(200, 200, 200);
+	display: flex;
+	align-items: center;
+	overflow-x: hidden;
+	overflow-y: auto;
+	flex-direction: column;
+	justify-content: center;
+}
+
+main {
+	flex-direction: column;
+	align-items: center;
+	display: flex;
+	justify-content: center;
+}
+
+.container {
+	border-radius: 10px;
+	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+	width: auto;
+	height: auto;
+	padding: 20px;
+}
+
+button {
+	border: 1px solid #888;
+    background-color: #f0f0f0;
+	border-radius: 10px;
+	width: 100px;
+	margin-top: 15px;
+	height: 35px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+button:hover {
+	cursor: pointer;
+	background-color: rgb(200, 200, 200);
+}
+
+input, label, select {
+	border-radius: 10px;
+	width: 200px;
+	height: 30px;
+	padding-left: 10px;
+	padding-bottom: 3px;
+}
+
+textarea {
+	width: 650px;
+	height: 200px;
+	border-radius: 10px;
+	padding-top: 10px;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-bottom: 10px;
+}
+
+span, label, select, option {
+	font-size: 15px;
+}
+
+.home {
+	position: absolute;
+	top: 30px;
+	right: 30px;
+	width: 80px;
+	height: 30px;
+	font-size: 18px;
+}

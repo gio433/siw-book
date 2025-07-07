@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Lista autori</title>
+    <link rel="stylesheet" th:href="@{/styleAutori.css}">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body class="body-container">
+    <div class="main-container">
+		    <div class="alert alert-primary" role="alert" th:text="${cancellaAutoreSuccesso}" th:if="${cancellaAutoreSuccesso}"></div>
+			<div class="alert alert-primary" role="alert" th:text="${cancellaAutoreErrore}" th:if="${cancellaAutoreErrore}"></div>
+		<h1>Lista degli autori inseriti:</h1>
+        <div th:if="${messaggioErrore != null}" class="error-message">
+            <p th:text="${messaggioErrore}"></p>
+        </div>
+
+        <!-- Se non ci sono autori -->
+        <div th:if="${autori == null or #lists.isEmpty(autori)}" class="author-container">
+            <p>Al momento non ci sono autori registrati nel sistema.</p>
+            <div th:if="${messaggioNessunAutore != null}">
+                <p th:text="${messaggioNessunAutore}"></p>
+            </div>
+        </div>
+
+        <!-- Se gli autori sono presenti -->
+        <div th:each="autore : ${autori}" class="author-container">
+            <h3 class="author-name" th:text="${autore.nome + ' ' + autore.cognome}">Nome Cognome Autore</h3>
+            <div th:if="${not #lists.isEmpty(autore.immagini)}">
+                <img th:src="@{/immagini/{id}(id=${autore.immagini[0].id})}" alt="Foto autore" class="author-image"/>
+            </div>
+            <div class="author-info">
+                <strong>Data di Nascita:</strong> 
+                <span th:text="${autore.dataNascita != null ? #temporals.format(autore.dataNascita, 'dd MMMM yyyy') : 'N/D'}">01 Gennaio 1970</span>
+            </div>
+
+            <div class="author-info">
+                <strong>Data di Morte:</strong> 
+                <span th:text="${autore.dataMorte != null ? #temporals.format(autore.dataMorte, 'dd MMMM yyyy') : 'N/D'}">31 Dicembre 2020</span>
+            </div>
+            
+            <div class="author-info">
+                <strong>Nazionalità:</strong> 
+                <span th:text="${autore.nazionalita}">Nazionalità</span>
+            </div>
+            
+            <form th:action="@{/amministratore/cancellaautore/{idAutore}(idAutore=${autore.id})}" method="POST" style="width: 100%; text-align: center;">
+                <button type="submit" class="cancel-btn">Cancella</button>
+            </form>
+        </div>
+
+        <form th:action="@{/index}" method="GET" style="margin-top: 20px;">
+            <button class="home" type="submit">Indietro</button>
+        </form>
+    </div>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
+</body>
+</html>

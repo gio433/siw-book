@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	    <title>Immagini libro</title>
+		<link rel="stylesheet" th:href="@{/styleViewImmagine.css}">
+	</head>
+	<body>
+		   <div class="gallery-container" th:if="${libro != null}">
+		   
+		       <div th:if="${not #lists.isEmpty(libro.immagini)}">
+		           <div th:each="immagine : ${libro.immagini}" class="image-card">
+		               <img th:src="@{/immagini/{id}(id=${immagine.id})}" th:alt="${immagine.nomeFile}">  
+		           </div>
+		       </div>
+
+		       <div th:if="${#lists.isEmpty(libro.immagini)}">
+		           <p>Non ci sono immagini disponibili per questo libro.</p>
+		       </div>
+		   </div>
+		   
+		   <div th:if="${libro == null}">
+		       <h1>Libro non trovato</h1>
+		       <p>Il libro che stai cercando non esiste.</p>
+		       <a th:href="@{/}">Torna alla homepage</a>
+		   </div>
+			<form th:action="@{/index}" method="GET" style="margin-top: 20px;">
+				<button class="home" type="submit">Indietro</button>
+			</form>
+	</body>
+</html>

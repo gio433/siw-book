@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${autore != null ? autore.nome + ' ' + autore.cognome : 'Autore non Trovato'}">Dettaglio Autore</title>
+    <link rel="stylesheet" th:href="@{/styleViewAutore.css}"/>
+</head>
+<body>
+    <header>
+        <h1>Dettaglio Autore</h1>
+    </header>
+        <div th:if="${autore != null}">
+            <h2 th:text="${autore.nome + ' ' + autore.cognome}">Nome Cognome Autore</h2>
+			 <div th:if="${not #lists.isEmpty(autore.immagini)}">
+			 	<img th:src="@{/immagini/{id}(id=${autore.immagini[0].id})}" alt="Foto autore" class="author-image" style="width:100px;"/>
+			</div>
+            <p><strong>Nazionalità:</strong> <span th:text="${autore.nazionalita}">Nazionalità</span></p>
+			<p>
+                <strong>Data di Nascita:</strong>
+                <span th:if="${autore.dataNascita != null}" th:text="${#temporals.format(autore.dataNascita, 'dd MMMM yyyy')}">Data Nascita</span>
+                <span th:if="${autore.dataNascita == null}">N/D</span>
+            </p>
+            <p>
+                <strong>Data di Morte:</strong>
+                <span th:if="${autore.dataMorte != null}" th:text="${#temporals.format(autore.dataMorte, 'dd MMMM yyyy')}">Data Morte</span>
+                <span th:if="${autore.dataMorte == null}">N/D (o ancora in vita)</span>
+            </p>
+
+            <h3>Libri Scritti:</h3>
+            <div th:if="${autore.libri != null and not autore.libri.isEmpty()}">
+                <ul>
+                    <li th:each="libro : ${autore.libri}">
+                        <span th:text="${libro.titolo}">Titolo</span>
+						<span>-</span>
+						<span th:text="${libro.anno}">Anno</span>
+                    </li>
+                </ul>
+            </div>
+            <div th:if="${autore.libri == null or autore.libri.isEmpty()}">
+                <p>Nessun libro registrato per questo autore.</p>
+            </div>
+        </div>
+
+        <div th:if="${messaggioErrore != null}">
+            <p style="color:red;" th:text="${messaggioErrore}">Errore</p>
+        </div>
+
+        <form th:action="@{/index}" method="GET">
+			<button type="submit">Home</button>
+		</form>
+</body>
+</html>

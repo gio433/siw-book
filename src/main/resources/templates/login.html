@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LOGIN</title>
+  <link rel="stylesheet" th:href="@{/styleLogin.css}">
+</head>
+<body>
+	<header>
+		<h1>SIW-BOOK</h1>
+	</header>
+      <div>
+        <form class="box-shadow" th:action="@{/login}" method="POST">
+            <h2>LOGIN</h2>
+            <input type="text" name="username" placeholder="username">
+            <input type="password" name="password" placeholder="password">
+            <button type=submit>ACCEDI</button>
+        </form>
+      </div>
+      <p>Non sei ancora registrato? <a th:href="@{/register}">Registrati ora</a></p>
+	  <form th:action="@{/index}" method="GET">
+	  	  	<button class="home" type="submit">Home</button>
+	  </form>
+</body>
+</html>

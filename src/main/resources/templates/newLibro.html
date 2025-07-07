@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title>Inserimento libro</title>
+		<link rel="stylesheet" th:href="@{/styleNewLibro.css}">
+	</head>
+	<body>
+		<form th:action="@{/amministratore/newLibro}" method="POST" th:object="${libro}" enctype="multipart/form-data">
+			<div class="container">
+				<h1>Inserimento di un nuovo libro</h1>
+				<span><input required type="text" th:field="*{titolo}" name="titolo" placeholder="titolo"
+				oninvalid="this.setCustomValidity('Completa questo campo.')" oninput="setCustomValidity('')"></span>
+				<span>Anno:<span><input required type="number" th:field="*{anno}" name="anno" placeholder="anno"
+				oninvalid="this.setCustomValidity('Completa questo campo.')" oninput="setCustomValidity('')"></span></span>
+				<div th:if="${tuttiGliAutori != null and not #lists.isEmpty(tuttiGliAutori)}">
+					<label for="autoriSelezionatiIds">Autori:</label>
+				    <select id="autoriSelezionatiIds" name="autoriSelezionatiIds" multiple="multiple" required size="5">
+				       	<option th:each="autoreOpzione : ${tuttiGliAutori}"
+							th:value="${autoreOpzione.id}"
+							th:text="${autoreOpzione.nome + ' ' + autoreOpzione.cognome}"
+				               th:selected="${libro.autori != null and #lists.contains(libro.autori, autoreOpzione)}"> 
+				           </option>
+					</select>
+					<span th:if="${#fields.hasErrors('autori')}" th:errors="*{autori}" style="color:red;"></span>
+				</div>
+				<div>
+					<br><hr><br><label for="file">Immagini del libro:</label>
+				    <input type="file" id="file" name="files" accept="image/png, image/jpeg" multiple>
+				</div>
+				<div th:if="${tuttiGliAutori == null or #lists.isEmpty(tuttiGliAutori)}">
+					<p>Nessun autore disponibile. <a th:href="@{/amministratore/newAutore}">Aggiungi un nuovo autore</a> prima.</p>
+				</div>
+				<button type="submit">Invia</button>
+			</div>
+		</form>
+		<form th:action="@{/index}" method="GET">
+			<button class="home" type="submit">Indietro</button>
+		</form>
+	</body>
+</html>

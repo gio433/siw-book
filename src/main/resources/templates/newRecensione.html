@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Nuova Recensione</title>
+    <link rel="stylesheet" th:href="@{/styleNewRecensione.css}">
+</head>
+<body>
+    <main>
+		<h1>Scrivi una Nuova Recensione</h1>
+        <form th:action="@{/utente/newrecensione}" method="POST" th:object="${recensione}">
+		<div class="container">
+            
+            <div th:if="${#fields.hasGlobalErrors()}">
+                <p th:each="err : ${#fields.globalErrors()}" th:text="${err}" class="error-message">Errore Globale</p>
+            </div>
+
+            <div>
+                <label for="libroSelect">Libro da Recensire:</label><br/>
+                <select id="libroSelect" name="libroId" required>
+                    <option value="">-- Seleziona un Libro --</option>
+                    <option th:each="libroOpzione : ${tuttiILibri}" 
+                            th:value="${libroOpzione.id}" 
+                            th:text="${libroOpzione.titolo}">
+                    </option>
+                </select>
+                <span th:if="${#fields.hasErrors('libro')}" th:errors="*{libro}" class="error-message"></span>
+            </div>
+            <br/>
+
+            <div>
+                <label for="titolo">Titolo della Recensione:</label><br/>
+                <input type="text" id="titolo" th:field="*{titolo}" placeholder="Es. Fantastico!" required maxlength="255"/>
+                <span th:if="${#fields.hasErrors('titolo')}" th:errors="*{titolo}" class="error-message"></span>
+            </div>
+            <br/>
+
+            <div>
+                <label for="voto">Voto (da 1 a 5):</label><br/>
+                <input type="number" id="voto" th:field="*{voto}" min="1" max="5" required />
+                <span th:if="${#fields.hasErrors('voto')}" th:errors="*{voto}" class="error-message"></span>
+            </div>
+            <br/>
+
+            <div>
+                <label for="testo">La tua Recensione:</label><br/>
+                <textarea id="testo" th:field="*{testo}" rows="8" cols="70" placeholder="Scrivi qui la tua opinione sul libro..." required maxlength="2000"></textarea>
+                <span th:if="${#fields.hasErrors('testo')}" th:errors="*{testo}" class="error-message"></span>
+            </div>
+            <br/>
+		</div>
+		<button type="submit">Invia Recensione</button>
+        </form>
+        <form th:action="@{/index}" method="GET">
+			<button class="home" type="submit">Home</button>
+		</form>
+    </main>
+</body>
+</html>

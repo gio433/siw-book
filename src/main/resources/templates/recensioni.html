@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Tutte le Recensioni - SiwBooks</title>
+	<link rel="stylesheet" th:href="@{/styleRecensioni.css}">
+</head>
+<body>
+        <h1>Tutte le Recensioni dei Nostri Utenti</h1>
+        <nav>
+            <form th:action="@{/index}" method="GET">
+				<button class="home" type="submit">Indietro</button>
+			</form>
+        </nav>
+
+    <div>
+        <div th:if="${messaggioErrore != null}" style="color: red; border: 1px solid red; padding: 10px; margin-bottom: 15px;">
+            <p th:text="${messaggioErrore}"></p>
+        </div>
+
+        <div th:if="${recensioni == null or #lists.isEmpty(recensioni)}">
+            <p>Al momento non ci sono recensioni da visualizzare.</p>
+            <div th:if="${messaggioNessunaRecensione != null}">
+                 <p th:text="${messaggioNessunaRecensione}"></p>
+            </div>
+        </div>
+
+        <div th:unless="${recensioni == null or #lists.isEmpty(recensioni)}">
+            <div th:each="recensione : ${recensioni}" class="scheda-recensione">
+                
+                <h3 th:text="${recensione.titolo}">Titolo della Recensione</h3>
+                
+                <div th:if="${recensione.libro != null}">
+                    <span>Recensione per: <span th:text="${recensione.libro.titolo}" style="font-weight: bold;">Titolo Libro</span></span> 
+                </div>
+                
+                <div th:if="${recensione.utente != null}"> 
+                    <span>Scritta da: <strong th:text="${recensione.utente.nome + ' ' + recensione.utente.cognome}">Nome Cognome Utente</strong>
+                </div>
+                <div th:unless="${recensione.utente != null}">
+                    Scritta da: Utente Anonimo (o rimosso)
+                </div>
+
+                <div>
+                    <span>Voto: <strong th:text="${recensione.voto + ' / 5'}"></strong></span>
+					</div>
+                
+                <div>
+                    <p th:text="${recensione.testo}">Testo della recensione...</p>
+                </div>
+				<div sec:authorize="hasAuthority('ADMIN')">
+				<form th:action="@{/amministratore/cancellarecensione/{id}(id=${recensione.id})}" method="POST" style="display:inline;">
+					<button type="submit" onclick="return confirm('Sei sicuro di voler cancellare questa recensione?');">
+						Cancella
+					</button>
+				</form>
+				</div><hr>
+				<div sec:authorize="hasAuthority('ADMIN')">
+				</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

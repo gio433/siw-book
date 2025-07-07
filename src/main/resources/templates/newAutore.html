@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Nuovo Autore</title>
+    <link rel="stylesheet" th:href="@{/styleNewAutore.css}">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Inserimento di un nuovo autore</h1>
+        <div th:if="${messaggioSuccesso}" class="alert alert-success" th:text="${messaggioSuccesso}"></div>
+        <div th:if="${messaggioErrore}" class="alert alert-danger" th:text="${messaggioErrore}"></div>
+
+        <form th:action="@{/amministratore/newAutore}" method="POST" th:object="${autore}" enctype="multipart/form-data">
+
+            <div>
+                <input type="text" id="nome" th:field="*{nome}" placeholder="nome" required>
+                <span class="error" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
+            </div>
+
+            <div>
+                <input type="text" id="cognome" th:field="*{cognome}" placeholder="cognome" required>
+                <span class="error" th:if="${#fields.hasErrors('cognome')}" th:errors="*{cognome}"></span>
+            </div>
+
+            <div>
+                <label for="dataNascita">Data di nascita:</label>
+                <input type="date" id="dataNascita" th:field="*{dataNascita}" required>
+                <span class="error" th:if="${#fields.hasErrors('dataNascita')}" th:errors="*{dataNascita}"></span>
+            </div>
+            
+            <div>
+                <label for="dataMorte">Data di morte:</label>
+                <input type="date" id="dataMorte" th:field="*{dataMorte}">
+                <span class="error" th:if="${#fields.hasErrors('dataMorte')}" th:errors="*{dataMorte}"></span>
+            </div>
+
+            <div>
+                <input type="text" id="nazionalita" th:field="*{nazionalita}" placeholder="nazionalita'" required>
+                <span class="error" th:if="${#fields.hasErrors('nazionalita')}" th:errors="*{nazionalita}"></span>
+            </div>
+            
+            <hr>
+            
+            <div>
+                <label for="file">Foto dell'autore:</label>
+                <input type="file" id="file" name="file" accept="image/png, image/jpeg">
+            </div>
+            
+            <hr>
+
+            <div>
+                <button type="submit">Invia</button>
+            </div>
+        </form>
+
+        <a th:href="@{/index}">
+            <button class="home">Indietro</button>
+        </a>
+    </div>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
+</body>
+</html>

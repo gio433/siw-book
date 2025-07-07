@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>REGISTRATI</title>
+  <link rel="stylesheet" th:href="@{/styleRegister.css}">
+</head>
+<body>
+      <header><h1>SIW-BOOK</h1></header>
+		<form class="box-shadow" th:action="@{/register}" method="POST" th:object="${utente}">
+			<h2>REGISTER</h2>				
+			<div>
+		    	<span><input required type="text" th:field="*{nome}" name="nome" placeholder="nome"
+				oninvalid="this.setCustomValidity('Completa questo campo.')" oninput="setCustomValidity('')"></span>
+			</div>
+			<div>
+		       <span><input required type="text" th:field="*{cognome}" name="cognome" placeholder="cognome"
+				oninvalid="this.setCustomValidity('Completa questo campo.')" oninput="setCustomValidity('')"></span>
+			</div>
+					    
+			<div th:object="${credentials}">
+				<div>
+					<span><input required type="text" th:field="*{username}" name="username" placeholder="username"></span>
+				</div>
+							
+				<div>
+					<span><input required type="password" th:field="*{password}" name="password" placeholder="password"></span>
+				</div> 
+			</div> 	
+		    <button type=submit>Invia</button>
+		</form>
+		<p>Hai già un account? <a th:href="@{/login}">Accedi</a></p>
+		<form th:action="@{/index}" method="GET">
+	  		<button class="home" type="submit">Home</button>
+	  	</form>
+</body>
+</html>

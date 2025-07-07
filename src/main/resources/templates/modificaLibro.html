@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title>Modifica libro</title>
+		<link rel="stylesheet" th:href="@{/styleModificaLibro.css}">
+	</head>
+	<body>
+		<header>
+			<h1 th:text="${libro.titolo}">Titolo del libro</h1>
+		</header>
+		<div class="container">
+		<form th:action="@{/amministratore/modificalibro/{id}(id=${libro.id})}" method="POST" th:object="${libro}" enctype="multipart/form-data">
+		
+			<h1>Modifica</h1>
+			<div>
+				<span>Titolo:<span><input required type="text" th:field="*{titolo}" placeholder="titolo"
+				oninvalid="this.setCustomValidity('Completa questo campo.')" oninput="setCustomValidity('')"></span></span>
+				<span>Anno:<span><input required type="number" th:field="*{anno}" placeholder="anno"
+				oninvalid="this.setCustomValidity('Completa questo campo.')" oninput="setCustomValidity('')"></span></span>
+			</div>
+			<div th:if="${tuttiGliAutori != null and not #lists.isEmpty(tuttiGliAutori)}">
+				<label for="autoriSelezionatiIds">Autori:</label>
+					<select id="autori" name="autori" multiple="multiple" required size="5">
+						<option th:each="autoreOpzione : ${tuttiGliAutori}"
+							th:value="${autoreOpzione.id}"
+							th:text="${autoreOpzione.nome + ' ' + autoreOpzione.cognome}"
+						    th:selected="${libro.autori != null and #lists.contains(libro.autori, autoreOpzione)}"> 
+						</option>
+					</select>
+				<span th:if="${#fields.hasErrors('autori')}" th:errors="*{autori}" style="color:red;"></span>
+			</div>
+			<div>
+				<label for="file">Immagini del libro:</label>
+				<input type="file" id="file" name="files" accept="image/png, image/jpeg" multiple>
+			</div>
+			<div th:if="${tuttiGliAutori == null or #lists.isEmpty(tuttiGliAutori)}">
+				<p>Nessun autore disponibile. <a th:href="@{/amministratore/newAutore}">Aggiungi un nuovo autore</a> prima.</p>
+			</div>
+			<div>
+				<button type="submit">Salva Modifiche</button>
+			</div>
+		</form>
+		</div>
+		<form th:action="@{/index}" method="GET">
+			<button class="home" type="submit">Indietro</button>
+		</form>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
+	</body>
+</html>
