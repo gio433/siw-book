@@ -7,15 +7,14 @@
 	<body>
 		   <div class="gallery-container" th:if="${libro != null}">
 		   
-		       <div th:if="${not #lists.isEmpty(libro.immagini)}">
-		           <div th:each="immagine : ${libro.immagini}" class="image-card">
-		               <img th:src="@{/immagini/{id}(id=${immagine.id})}" th:alt="${immagine.nomeFile}">  
-		           </div>
-		       </div>
-
-		       <div th:if="${#lists.isEmpty(libro.immagini)}">
-		           <p>Non ci sono immagini disponibili per questo libro.</p>
-		       </div>
+				<th:block th:if="${not #lists.isEmpty(libro.immagini)}">
+					<div th:each="immagine : ${libro.immagini}" class="image-card">
+						<img th:src="@{/immagini/{id}(id=${immagine.id})}" th:alt="${immagine.nomeFile}">  
+					</div>
+				</th:block>
+				<div th:if="${#lists.isEmpty(libro.immagini)}">
+					<p>Non ci sono immagini disponibili per questo libro.</p>
+				</div>
 		   </div>
 		   
 		   <div th:if="${libro == null}">
