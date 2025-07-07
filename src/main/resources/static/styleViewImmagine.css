@@ -20,10 +20,8 @@ body {
 }
 
 .image-card {
-    border: 1px solid #ccc;
     padding: 10px;
-    background-color: white;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    background-color: none;
     text-align: center;
 	display: flex;
 	justify-content: center;
